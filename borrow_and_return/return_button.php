@@ -1,10 +1,15 @@
+<!-- 還車時要修改交易紀錄的「$ubike_transaction_return, $ubike_station_return」，
+     但要怎麼在這頁拿到「$ubike_transaction_id」來呼叫資料庫??? 
+-->
+
+
 <?php 
 
     //測資
     $ubike_transaction_id = 1;
 
-    $ubike_station_borrow = $_POST['ubike_station_borrow'];
-    $ubike_bike_id = $_POST['ubike_bike_id'];
+    // $ubike_station_borrow = $_POST['ubike_station_borrow'];
+    // $ubike_bike_id = $_POST['ubike_bike_id'];
 
     $link = mysqli_connect("localhost","root","12345678","ubike_sa");
     $sql="select * from ubike_transaction where ubike_transaction_id ='$ubike_transaction_id'";
@@ -54,6 +59,11 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+
+      <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
 </head>
 
 <body>
@@ -77,49 +87,53 @@
               </div>
 
               <h2 class="entry-title">
+			  	      <i class="bi bi-suit-heart"></i>
                 <?php echo $ubike_station_return; ?>
               </h2>
 
               <div class="entry-content">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_2">還車</button>
+
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal">掃碼還車</button>
+
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal_2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 id="exampleModalLabel">還車成功！</h5>
+                        <h5>還車步驟</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <table>
-                          <tr>
-                            <td>價格</td>
-                            <td style="text-align: right;">10元</td>
-                          </tr>
+                        <form action="return_dblink.php" method="post">
 
-                          <tr>
-                            <td>騎乘時間</td>
-                            <td style="text-align: right;">10分鐘</td>
-                          </tr>
+                          <div class="mb-3">  
+                            <label for="recipient-name" class="col-form-label">1.請輸入「車號」來模擬掃碼(ex:b002)：</label>
+                            <input type="text" class="form-control" name="ubike_bike_id" required>
 
-                          <tr>
-                            <td>騎乘車號</td>
-                            <td style="text-align: right;"><?php echo $ubike_bike_id; ?></td>
-                          </tr>
+                            <input type="hidden" name="ubike_borrow_time" value="<?php $ubike_borrow_time = date('Y-m-d h:i:s', time()); echo $ubike_borrow_time?>">
+                          </div>
 
-                          <!-- 
-                            <tr>
-                              <td>騎乘距離</td>
-                              <td style="text-align: right;">2km</td>
-                            </tr> 
-                          -->
-                        </table>
+                          <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">2.請選擇還車站點：</label>
+                            <select name="station_id" class="form-select">
+                                <option value="1">輔大站</option>
+                                <option value="2">濟時站</option>
+                                <option value="3">中美堂站</option>
+                            </select>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="submit" class="btn btn-primary">確定</button>
+                          </div>
+
+                        </form>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                
               </div>
 
             </article><!-- End blog entry -->

@@ -83,12 +83,15 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <form action="return_button.php" method="post">
+                        <form action="borrow_dblink.php" method="post">
 
+                          
                           <div class="mb-3">  
-                            <label for="recipient-name" class="col-form-label">請輸入車號來模擬掃碼：</label>
+                            <label for="recipient-name" class="col-form-label">請輸入「車號」來模擬掃碼(ex:b001)：</label>
                             <input type="text" class="form-control" name="ubike_bike_id" required>
-                            <input type="hidden" name="ubike_station_borrow" value="<?php echo $ubike_station_name; ?>">
+
+                            <input type="hidden" name="ubike_station_name" value="<?php echo $ubike_station_name ?>">
+                            <input type="hidden" name="ubike_borrow_time" value="<?php $ubike_borrow_time = date('Y-m-d h:i:s', time()); date_default_timezone_set(prc); echo $ubike_borrow_time ?>">
                           </div>
 
                           <div class="modal-footer">
