@@ -1,0 +1,15 @@
+<?php
+if(isset($_SESSION['level'])){
+?>
+<?php
+$filename=$_GET['filename'];	
+header('content-disposition:attachment;filename='.$filename);
+header('content-length:'.filesize($filename));
+readfile($filename);
+?>
+<?php
+}
+else{
+    header('location:防駭登入.php');
+}
+?>
