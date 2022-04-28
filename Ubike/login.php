@@ -4,10 +4,6 @@
     $ubike_user_phone=$_POST['ubike_user_phone'];
     $ubike_user_password=$_POST['ubike_user_password'];
     $error="";
-
-    /*if(isset($_SESSION['ubike_user_phone'])){
-      header('location:index.html?method=message&message=已登入');
-    }*/
     
     if(isset($_POST['ubike_user_phone'])){
         $link=mysqli_connect("localhost", "root","12345678","ubike_sa");
